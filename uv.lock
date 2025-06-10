@@ -4,10 +4,10 @@ requires-python = ">=3.9"
 [[package]]
 name = "colorama"
 version = "0.4.6"
-source = { registry = "https://test.pypi.org/simple/" }
-sdist = { url = "https://test-files.pythonhosted.org/packages/d8/53/6f443c9a4a8358a93a6792e2acffb9d9d5cb0a5cfd8802644b7b1c9a02e4/colorama-0.4.6.tar.gz", hash = "sha256:08695f5cb7ed6e0531a20572697297273c47b8cae5a63ffc6d6ed5c201be6e44", size = 27697 }
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/d8/53/6f443c9a4a8358a93a6792e2acffb9d9d5cb0a5cfd8802644b7b1c9a02e4/colorama-0.4.6.tar.gz", hash = "sha256:08695f5cb7ed6e0531a20572697297273c47b8cae5a63ffc6d6ed5c201be6e44", size = 27697 }
 wheels = [
-    { url = "https://test-files.pythonhosted.org/packages/d1/d6/3965ed04c63042e047cb6a3e6ed1a63a35087b6a609aa3a15ed8ac56c221/colorama-0.4.6-py2.py3-none-any.whl", hash = "sha256:4f1d9991f5acc0ca119f9d443620b77f9d6b33703e51011c16baf57afb285fc6", size = 25335 },
+    { url = "https://files.pythonhosted.org/packages/d1/d6/3965ed04c63042e047cb6a3e6ed1a63a35087b6a609aa3a15ed8ac56c221/colorama-0.4.6-py2.py3-none-any.whl", hash = "sha256:4f1d9991f5acc0ca119f9d443620b77f9d6b33703e51011c16baf57afb285fc6", size = 25335 },
 ]
 
 [[package]]
@@ -92,13 +92,13 @@ wheels = [
 [[package]]
 name = "opentelemetry-proto"
 version = "1.34.1"
-source = { registry = "https://test.pypi.org/simple/" }
+source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "protobuf" },
 ]
-sdist = { url = "https://test-files.pythonhosted.org/packages/66/b3/c3158dd012463bb7c0eb7304a85a6f63baeeb5b4c93a53845cf89f848c7e/opentelemetry_proto-1.34.1.tar.gz", hash = "sha256:16286214e405c211fc774187f3e4bbb1351290b8dfb88e8948af209ce85b719e", size = 34344 }
+sdist = { url = "https://files.pythonhosted.org/packages/66/b3/c3158dd012463bb7c0eb7304a85a6f63baeeb5b4c93a53845cf89f848c7e/opentelemetry_proto-1.34.1.tar.gz", hash = "sha256:16286214e405c211fc774187f3e4bbb1351290b8dfb88e8948af209ce85b719e", size = 34344 }
 wheels = [
-    { url = "https://test-files.pythonhosted.org/packages/28/ab/4591bfa54e946350ce8b3f28e5c658fe9785e7cd11e9c11b1671a867822b/opentelemetry_proto-1.34.1-py3-none-any.whl", hash = "sha256:eb4bb5ac27f2562df2d6857fc557b3a481b5e298bc04f94cc68041f00cebcbd2", size = 55692 },
+    { url = "https://files.pythonhosted.org/packages/28/ab/4591bfa54e946350ce8b3f28e5c658fe9785e7cd11e9c11b1671a867822b/opentelemetry_proto-1.34.1-py3-none-any.whl", hash = "sha256:eb4bb5ac27f2562df2d6857fc557b3a481b5e298bc04f94cc68041f00cebcbd2", size = 55692 },
 ]
 
 [[package]]
@@ -123,21 +123,21 @@ test = [
 requires-dist = [
     { name = "grpcio", specifier = ">=1.59.0" },
     { name = "opentelemetry-proto", specifier = ">=1.34.1" },
-    { name = "otel-log-proto-mapper", marker = "extra == 'mapper'", specifier = ">=0.1.0" },
-    { name = "otel-log-proto-mapper", marker = "extra == 'test'", specifier = ">=0.1.0" },
+    { name = "otel-log-proto-mapper", marker = "extra == 'mapper'", specifier = ">=0.1.4" },
+    { name = "otel-log-proto-mapper", marker = "extra == 'test'", specifier = ">=0.1.4" },
     { name = "pytest", marker = "extra == 'test'", specifier = ">=8.4.0" },
 ]
 
 [[package]]
 name = "otel-log-proto-mapper"
-version = "0.1.1"
-source = { registry = "https://test.pypi.org/simple/" }
+version = "0.1.4"
+source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "opentelemetry-proto" },
 ]
-sdist = { url = "https://test-files.pythonhosted.org/packages/be/e4/b47d28817501fb7ad7f85e2a1fbc98a7188fef6b602d8aa97350b05dff57/otel_log_proto_mapper-0.1.1.tar.gz", hash = "sha256:c22d8b9bd0e9ce9964833865bf78863a0bba27a7291acbaf5740f6a95710e09f", size = 6292 }
+sdist = { url = "https://files.pythonhosted.org/packages/d9/76/c971e470a4f2c110b5d8e89e9f443d0979dadc96ade6c9577a9f2501216c/otel_log_proto_mapper-0.1.4.tar.gz", hash = "sha256:11029a31e2ac7a082514128b2626df2ddf33774dbd19a9404b09beb366fe0769", size = 6282 }
 wheels = [
-    { url = "https://test-files.pythonhosted.org/packages/62/b1/df8f931f7a380c3c3ad86101a9da5ba3baaad49c67d7292f7c45e98e9282/otel_log_proto_mapper-0.1.1-py3-none-any.whl", hash = "sha256:9ac819129305a90c38a7e247d0879ec382f9eb5c2483621a8255b5cf68fba59b", size = 7204 },
+    { url = "https://files.pythonhosted.org/packages/f3/b6/bfc1bda393e87c7159013e9ebf4b1c1678a4c88749e9a2760fa59b9b558a/otel_log_proto_mapper-0.1.4-py3-none-any.whl", hash = "sha256:b3bbfc98954b0588e6bc11db1ca435878404fe3107838f1bdb914ce1d876a25b", size = 7205 },
 ]
 
 [[package]]
@@ -177,10 +177,10 @@ wheels = [
 [[package]]
 name = "pygments"
 version = "2.19.1"
-source = { registry = "https://test.pypi.org/simple/" }
-sdist = { url = "https://test-files.pythonhosted.org/packages/7c/2d/c3338d48ea6cc0feb8446d8e6937e1408088a72a39937982cc6111d17f84/pygments-2.19.1.tar.gz", hash = "sha256:61c16d2a8576dc0649d9f39e089b5f02bcd27fba10d8fb4dcc28173f7a45151f", size = 4968581 }
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/7c/2d/c3338d48ea6cc0feb8446d8e6937e1408088a72a39937982cc6111d17f84/pygments-2.19.1.tar.gz", hash = "sha256:61c16d2a8576dc0649d9f39e089b5f02bcd27fba10d8fb4dcc28173f7a45151f", size = 4968581 }
 wheels = [
-    { url = "https://test-files.pythonhosted.org/packages/8a/0b/9fcc47d19c48b59121088dd6da2488a49d5f72dacf8262e2790a1d2c7d15/pygments-2.19.1-py3-none-any.whl", hash = "sha256:9ea1544ad55cecf4b8242fab6dd35a93bbce657034b0611ee383099054ab6d8c", size = 1225293 },
+    { url = "https://files.pythonhosted.org/packages/8a/0b/9fcc47d19c48b59121088dd6da2488a49d5f72dacf8262e2790a1d2c7d15/pygments-2.19.1-py3-none-any.whl", hash = "sha256:9ea1544ad55cecf4b8242fab6dd35a93bbce657034b0611ee383099054ab6d8c", size = 1225293 },
 ]
 
 [[package]]

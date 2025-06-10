@@ -28,12 +28,12 @@ license = "MIT"
 # Users can install with `pip install otel-log-grpc-handler[mapper]`
 # to get the default LogRecord to OTLP protobuf conversion.
 mapper = [
-    "otel-log-proto-mapper>=0.1.0", # Reference your other package, specify min version
+    "otel-log-proto-mapper>=0.1.4", # Reference your other package, specify min version
 ]
 # For developers/testing purposes. Install with `uv pip install -e .[test]`
 test = [
     "pytest>=8.4.0",
-    "otel-log-proto-mapper>=0.1.0", # Test requires the mapper for integration tests
+    "otel-log-proto-mapper>=0.1.4", # Test requires the mapper for integration tests
 ]
 
 [project.urls]
@@ -45,6 +45,3 @@ where = ["."] # Search for packages in the current directory
 
 [tool.pytest.ini_options]
 pythonpath = ["."] # Allows pytest to find your package during tests
-
-[[tool.uv.index]]
-url = "https://test.pypi.org/simple/"
