@@ -37,7 +37,7 @@ def test_integration_with_default_mapper(otlp_grpc_mock_server, clean_logger):
     # No custom converter passed; handler should use the default mapper if available
     handler = OTLPGrpcLogHandler(
         endpoint=endpoint,
-        service_name="test-integration",
+        resource_attributes=OTLPGrpcLogHandler.build_resource_attributes("test-integration"),
         max_batch_size=1, # Smaller batch size for immediate flushing
         flush_interval=0.1
     )

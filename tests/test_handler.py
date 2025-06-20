@@ -4,7 +4,7 @@ import time
 import sys
 import uuid # For unique log IDs in tests
 
-from otel_log_grpc_handler.handler import OTLPGrpcLogHandler # Assuming your handler is in otel_log_grpc_handler/handler.py
+from otel_log_grpc_handler.handler import OTLPGrpcLogHandler
 from opentelemetry.proto.common.v1 import common_pb2
 from opentelemetry.proto.logs.v1 import logs_pb2 as otel_logs_pb2
 
@@ -47,7 +47,7 @@ def test_handler_sends_mapped_messages(otlp_grpc_mock_server, clean_logger):
     root_logger = logging.getLogger()
     handler = OTLPGrpcLogHandler(
         endpoint=endpoint,
-        service_name="test-handler-module",
+        resource_attributes=OTLPGrpcLogHandler.build_resource_attributes("test-handler-module"),
         max_batch_size=2, # Small batch size for quick flushing
         flush_interval=0.1,
         log_record_converter=semi_random_log_record_converter # Provide our custom mapper

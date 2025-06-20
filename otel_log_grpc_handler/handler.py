@@ -7,7 +7,7 @@ import collections
 import atexit
 # Attempt conditional import for the mapper
 try:
-    from otel_log_proto_mapper.converter import convert_log_record, OTEL_SEVERITY_MAP as _DEFAULT_OTEL_SEVERITY_MAP
+    from otel_log_proto_mapper.converter import convert_log_record
     _HAS_DEFAULT_MAPPER = True
 except ImportError:
     _HAS_DEFAULT_MAPPER = False
@@ -26,27 +26,23 @@ class OTLPGrpcLogHandler(logging.Handler):
     Implements client-side batching for efficiency and robustness.
     Automatically registers its close method with atexit for graceful shutdown.
     """
-    # Use default map if mapper is available, otherwise define a minimal one
-    OTEL_SEVERITY_MAP = _DEFAULT_OTEL_SEVERITY_MAP if _HAS_DEFAULT_MAPPER else {
-        logging.DEBUG: otel_logs_pb2.SeverityNumber.SEVERITY_NUMBER_DEBUG,
-        logging.INFO: otel_logs_pb2.SeverityNumber.SEVERITY_NUMBER_INFO,
-        logging.WARNING: otel_logs_pb2.SeverityNumber.SEVERITY_NUMBER_WARN,
-        logging.ERROR: otel_logs_pb2.SeverityNumber.SEVERITY_NUMBER_ERROR,
-        logging.CRITICAL: otel_logs_pb2.SeverityNumber.SEVERITY_NUMBER_FATAL,
-    }
 
 
-    def __init__(self, endpoint: str, service_name: str,
+    def __init__(self, endpoint: str,
+                 resource_attributes: list[common_pb2.KeyValue] | None = None,
                  max_batch_size: int = 100, flush_interval: float = 1.0,
                  max_queue_size: int = 2048,
-                 log_record_converter=None, # New optional parameter
-                 **kwargs):
+                 log_record_converter=None):
         super().__init__()
         self.endpoint = endpoint
-        self.service_name = service_name
         self.max_batch_size = max_batch_size
         self.flush_interval = flush_interval
         self.max_queue_size = max_queue_size
+
+        self.resource_attributes = (
+            resource_attributes if resource_attributes is not None
+            else OTLPGrpcLogHandler.build_resource_attributes('unknown')
+        )
 
         # Determine the log record conversion function
         if log_record_converter:
@@ -83,6 +79,25 @@ class OTLPGrpcLogHandler(logging.Handler):
         atexit.register(self.close)
         self._internal_logger.info("OTLPGrpcLogHandler's close method automatically registered with atexit.")
 
+    @staticmethod
+    def build_resource_attributes(
+        service_name: str,
+        deployment_environment: str | None = None,
+        host_ip: str | None = None,
+        host_name: str | None = None,
+        service_namespace: str | None = None,
+    ) -> list[common_pb2.KeyValue]:
+        return [
+            common_pb2.KeyValue(key=key, value=common_pb2.AnyValue(string_value=value))
+            for key, value in [
+                ("service.name", service_name),
+                ("deployment.environment", deployment_environment),
+                ("host.ip", host_ip),
+                ("host.name", host_name),
+                ("service.namespace", service_namespace),
+            ]
+            if value is not None
+        ]
 
     def _connect(self):
         """Establishes gRPC channel and stub."""
@@ -156,12 +171,7 @@ class OTLPGrpcLogHandler(logging.Handler):
         try:
             otel_log_records = [self._convert_log_record(r) for r in records]
 
-            resource = resource_pb2.Resource(
-                attributes=[
-                    common_pb2.KeyValue(key="service.name", value=common_pb2.AnyValue(string_value=self.service_name)),
-                    common_pb2.KeyValue(key="host.name", value=common_pb2.AnyValue(string_value=self.service_name)),
-                ]
-            )
+            resource = resource_pb2.Resource(attributes=self.resource_attributes)
 
             scope_logs = otel_logs_pb2.ScopeLogs(
                 scope=common_pb2.InstrumentationScope(name="python.logging", version="1.0"),
@@ -228,7 +238,7 @@ class OTLPGrpcLogHandler(logging.Handler):
 # --- Global Logger Setup ---
 def setup_logging_with_custom_otel_handler(
     service_name: str,
-    otel_collector_endpoint: str = None,
+    otel_collector_endpoint: str | None = None,
     enable_otel_logs: bool = False,
     max_batch_size: int = 100,
     flush_interval: float = 1.0,
@@ -247,7 +257,7 @@ def setup_logging_with_custom_otel_handler(
     if enable_otel_logs and otel_collector_endpoint:
         otlp_handler = OTLPGrpcLogHandler(
             endpoint=otel_collector_endpoint,
-            service_name=service_name,
+            resource_attributes=OTLPGrpcLogHandler.build_resource_attributes(service_name),
             max_batch_size=max_batch_size,
             flush_interval=flush_interval,
             max_queue_size=max_queue_size

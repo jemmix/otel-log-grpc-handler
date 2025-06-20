@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "otel-log-grpc-handler"
-version = "0.1.0"  # Make sure this matches __init__.py
+version = "0.1.1"  # Make sure this matches __init__.py
 authors = [
   { name="Andrey Ilyin", email="jemmix@gmail.com" },
 ]
